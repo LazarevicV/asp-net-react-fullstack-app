@@ -1,3 +1,6 @@
+using asp_net_react_fullstack_app.Server.Models;
+using asp_net_react_fullstack_app.Server.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -18,6 +21,13 @@ builder.Services.AddCors(options =>
                    .AllowAnyHeader();
         });
 });
+
+builder.Services.Configure<ELearningPlatformaSettings>(
+    builder.Configuration.GetSection("eLearningPlatforma"));
+
+builder.Services.AddSingleton<CoursesService>();
+
+builder.Services.AddScoped<CoursesService>();
 
 var app = builder.Build();
 
