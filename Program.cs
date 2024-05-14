@@ -28,6 +28,7 @@ builder.Services.Configure<ELearningPlatformaSettings>(
 builder.Services.AddSingleton<CoursesService>();
 
 builder.Services.AddScoped<CoursesService>();
+builder.Services.AddScoped<SchoolsService>();
 
 var app = builder.Build();
 
