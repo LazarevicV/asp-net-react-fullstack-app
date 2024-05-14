@@ -8,7 +8,7 @@ public class ELearningPlatformaSettings
 
     public string CoursesCollectionName { get; set; } = null!;
     
-    public string SchoolCollectionName { get; set; } = null!;
+    public string SchoolsCollectionName { get; set; } = null!;
     
     public string UsersCollectionName { get; set; } = null!;
 }
