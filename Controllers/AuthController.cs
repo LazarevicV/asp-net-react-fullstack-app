@@ -16,26 +16,24 @@ namespace asp_net_react_fullstack_app.Server.Controllers
     [Route("[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly UsersService _userService; 
+        private readonly UsersService _userService;
         private readonly IConfiguration _configuration;
 
-        public AuthController(IConfiguration configuration)
+        public AuthController(IConfiguration configuration, UsersService userService)
         {
             _configuration = configuration;
+            _userService = userService;
         }
 
         [HttpPost("login")]
         public IActionResult Login(LoginModel login)
         {
             // Validate credentials (e.g., from database)
-            if (IsValidUser(login.Username, login.Password))
-            {
-                // Generate JWT token
-                var token = GenerateJwtToken(login.Username);
-                return Ok(new { token });
-            }
+            if (!IsValidUser(login.Username, login.Password)) return Unauthorized();
+            // Generate JWT token
+            var token = GenerateJwtToken(login.Username);
+            return Ok(new { token });
 
-            return Unauthorized();
         }
         private string GenerateJwtToken(string username)
         {
@@ -62,6 +60,9 @@ namespace asp_net_react_fullstack_app.Server.Controllers
             
             
             var user = userCollection.Find(u => u.Username == username).FirstOrDefault();
+
+            Console.WriteLine(user);
+
             if (user == null)
                 return false;
 
