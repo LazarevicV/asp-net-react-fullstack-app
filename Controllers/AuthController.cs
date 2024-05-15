@@ -61,30 +61,35 @@ namespace asp_net_react_fullstack_app.Server.Controllers
             
             var user = userCollection.Find(u => u.Username == username).FirstOrDefault();
 
-            Console.WriteLine(user);
-
             if (user == null)
                 return false;
 
             return VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt);
         }
         
-        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+        private bool VerifyPasswordHash(string password, byte[] passwordHashFromDb, byte[] passwordSaltFromDb)
         {
-            using var hmac = new HMACSHA512(passwordSalt);
-
+            using var hmac = new HMACSHA512(passwordSaltFromDb);
             var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
 
+            // Convert the Base64 string from the database to bytes
+            var databaseHashBytes = Convert.FromBase64String(Convert.ToBase64String(passwordHashFromDb));
+
+            // Compare the computed hash with the hash from the database byte by byte
             for (int i = 0; i < computedHash.Length; i++)
             {
-                if (computedHash[i] != passwordHash[i])
+                if (computedHash[i] != databaseHashBytes[i])
                 {
+                    Console.WriteLine("Hashes don't match at index: " + i);
                     return false;
                 }
             }
 
             return true;
         }
+
+
+
         
         [HttpPost("register")]
         public IActionResult Register(RegisterModel register)
