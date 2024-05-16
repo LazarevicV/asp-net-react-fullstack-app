@@ -19,4 +19,10 @@ public class CoursesService
     {
         return await _coursesCollection.Find(_ => true).ToListAsync();
     }
+
+    public async Task<List<string>> GetAllCategoriesAsync()
+    {
+        var categories = await _coursesCollection.Distinct(c => c.Category, _ => true).ToListAsync();
+        return categories;
+    }
 }

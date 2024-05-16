@@ -41,5 +41,13 @@ namespace asp_net_react_fullstack_app.Server.Controllers
         public void Delete(int id)
         {
         }
+
+        // GET: api/Course/Categories
+        [HttpGet("Categories")]
+        public async Task<ActionResult<IEnumerable<string>>> GetCategories()
+        {
+            var categories = await coursesService.GetAllCategoriesAsync();
+            return Ok(categories);
+        }
     }
 }
