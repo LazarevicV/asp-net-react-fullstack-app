@@ -67,9 +67,12 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var dbService = services.GetRequiredService<DBService>();
-        var migrationService = new CourseMigration(dbService.service);
-        await migrationService.MigrateData();
-        Console.WriteLine("this is called");
+        var courseMigrationService = new CourseSeeder(dbService.service);
+        await courseMigrationService.MigrateData();
+
+        // Seed school data
+        var schoolMigrationService = new SchoolSeeder(dbService.service);
+        await schoolMigrationService.SeedSchoolDataAsync();
     }
     catch (Exception ex)
     {
