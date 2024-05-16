@@ -38,7 +38,6 @@ namespace asp_net_react_fullstack_app.Server.Migrations
                     school.Courses = courses.Select(course => course.Id.ToString()).ToList();
 
                     await _schoolCollection.InsertOneAsync(school);
-                    Console.WriteLine($"Inserted school: {school.Name}");
                 }
                 Console.WriteLine("School data seeding completed successfully.");
             }

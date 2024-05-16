@@ -67,12 +67,22 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var dbService = services.GetRequiredService<DBService>();
-        var courseMigrationService = new CourseSeeder(dbService.service);
-        await courseMigrationService.MigrateData();
 
-        // Seed school data
-        var schoolMigrationService = new SchoolSeeder(dbService.service);
-        await schoolMigrationService.SeedSchoolDataAsync();
+        var coursesCount = await dbService.GetCollectionCountAsync("Courses");
+        var schoolsCount = await dbService.GetCollectionCountAsync("Schools");
+
+        if (coursesCount < 1) // checks if there is no data in the database
+        {
+            var courseMigrationService = new CourseSeeder(dbService.service);
+            await courseMigrationService.MigrateData();
+        }
+
+        if (schoolsCount < 1) // checks if there is no data in the database
+        {
+            // Seed school data
+            var schoolMigrationService = new SchoolSeeder(dbService.service);
+            await schoolMigrationService.SeedSchoolDataAsync();
+        }
     }
     catch (Exception ex)
     {
