@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using asp_net_react_fullstack_app.Server.Models;
 using asp_net_react_fullstack_app.Server.Services;
+using asp_net_react_fullstack_app.Server.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,6 +59,24 @@ builder.Services.AddAuthentication(options =>
 });
 
 var app = builder.Build();
+
+// Migrate data before starting the application
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var dbService = services.GetRequiredService<DBService>();
+        var migrationService = new CourseMigration(dbService.service);
+        await migrationService.MigrateData();
+        Console.WriteLine("this is called");
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while migrating data.");
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
