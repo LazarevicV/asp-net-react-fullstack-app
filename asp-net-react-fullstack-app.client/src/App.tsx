@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 
 function App() {
@@ -10,7 +8,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5024/api/Test", {
+        const response = await fetch("http://localhost:5024/api/Courses", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
