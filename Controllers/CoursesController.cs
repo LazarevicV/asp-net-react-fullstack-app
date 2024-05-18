@@ -2,6 +2,7 @@ using asp_net_react_fullstack_app.Server.Models;
 using asp_net_react_fullstack_app.Server.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace asp_net_react_fullstack_app.Server.Controllers
 {
@@ -17,11 +18,22 @@ namespace asp_net_react_fullstack_app.Server.Controllers
             return Ok(courses);
         }
 
-        // GET api/<CoursesController>/5
+        // GET api/<CoursesController>/664883b921630257970127ba
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<Course>> GetCourse(string id)
         {
-            return "value";
+            if (!ObjectId.TryParse(id, out var objectId))
+            {
+                return BadRequest("Invalid ID format");
+            }
+
+            var course = await coursesService.GetCourseByIdAsync(objectId);
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(course);
         }
 
         // POST api/<CoursesController>
