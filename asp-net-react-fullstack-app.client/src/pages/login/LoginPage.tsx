@@ -16,7 +16,7 @@ const LoginPage: React.FC<{ className?: string }> = ({ className }) => {
   }, [isAuth]);
 
   return (
-    <div className={cx(" ", className)}>
+    <div className={cx("", className)}>
       <LoginForm />
     </div>
   );

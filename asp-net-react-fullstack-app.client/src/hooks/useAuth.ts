@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 
 import { api } from "../services/api";
@@ -10,7 +10,12 @@ type AuthType = {
 };
 
 const useAuth = () => {
+  const [user, setUser] = useState<{
+    username: string;
+    role: 'member' | 'admin';
+  }>();
   const [value, setValue, removeValue] = useLocalStorage(TOKEN_KEY, null);
+  
   const [error, setError] = useState<string>();
 
   const login = async ({ username, password }: AuthType) => {
@@ -24,10 +29,12 @@ const useAuth = () => {
         },
       },
     })
-      .then((res) => {
+      .then(async (res) => {
         if (res.status === 200) {
           setValue(res.data.token);
           setError(undefined);
+
+          
         }
       })
       .catch((err) => {
@@ -76,6 +83,33 @@ const useAuth = () => {
         }
       });
   };
+
+
+  const verify = async () => {
+    await api({
+      endpoint: "Auth/me",
+      config: {
+        headers: {
+          Authorization: `Bearer ${value}`,
+          "Content-Type": "application/json",
+        },
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          // do something
+          setUser({
+            username: res.data.username,
+            role: res.data.role,
+          })
+        }
+      })
+      .catch(() => {
+        removeValue();
+      });
+  }
+
+ 
 
   const isAuth = Boolean(value);
 

@@ -1,5 +1,10 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { TOKEN_KEY } from "../lib/constants";
+import { SchoolsPage } from "../pages/schools/SchoolsPage";
+
+type SchoolsSearchType = {
+  search: string;
+};
 
 export const Route = createFileRoute("/schools")({
   beforeLoad: async () => {
@@ -12,5 +17,11 @@ export const Route = createFileRoute("/schools")({
     }
   },
 
-  component: () => <div>Hello /schools!</div>,
+  component: () => <SchoolsPage />,
+
+  validateSearch: (search: Record<string, unknown>): SchoolsSearchType => {
+    return {
+      search: (search.search as string) || "",
+    };
+  },
 });
