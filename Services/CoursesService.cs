@@ -1,5 +1,6 @@
 using asp_net_react_fullstack_app.Server.Models;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace asp_net_react_fullstack_app.Server.Services;
@@ -24,5 +25,10 @@ public class CoursesService
     {
         var categories = await _coursesCollection.Distinct(c => c.Category, _ => true).ToListAsync();
         return categories;
+    }
+
+    public async Task<Course> GetCourseByIdAsync(ObjectId id)
+    {
+        return await _coursesCollection.Find(course => course.Id == id.ToString()).FirstOrDefaultAsync();
     }
 }

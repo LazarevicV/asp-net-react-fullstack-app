@@ -17,4 +17,9 @@ public class UsersService
     {
         return _usersCollection;
     }
+
+    public async Task<User> GetUserByUsernameAsync(string username)
+    {
+        return await _usersCollection.Find(user => user.Username == username).FirstOrDefaultAsync();
+    }
 }
