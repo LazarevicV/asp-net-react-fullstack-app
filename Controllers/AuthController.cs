@@ -8,23 +8,15 @@ using System.Security.Cryptography;
 using System.Text;
 using asp_net_react_fullstack_app.Server.Models;
 using asp_net_react_fullstack_app.Server.Services;
+using Microsoft.AspNetCore.Authorization;
 using MongoDB.Driver;
 
 namespace asp_net_react_fullstack_app.Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AuthController : ControllerBase
+    public class AuthController(IConfiguration configuration, UsersService userService) : ControllerBase
     {
-        private readonly UsersService _userService;
-        private readonly IConfiguration _configuration;
-
-        public AuthController(IConfiguration configuration, UsersService userService)
-        {
-            _configuration = configuration;
-            _userService = userService;
-        }
-
         [HttpPost("login")]
         public IActionResult Login(LoginModel login)
         {
@@ -38,7 +30,7 @@ namespace asp_net_react_fullstack_app.Server.Controllers
         private string GenerateJwtToken(string username)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration["JwtSettings:SecretKey"]);
+            var key = Encoding.ASCII.GetBytes(configuration["JwtSettings:SecretKey"]);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
@@ -56,7 +48,7 @@ namespace asp_net_react_fullstack_app.Server.Controllers
         private bool IsValidUser(string username, string password)
         {
 
-            var userCollection = _userService.getCollection();
+            var userCollection = userService.getCollection();
             
             
             var user = userCollection.Find(u => u.Username == username).FirstOrDefault();
@@ -87,14 +79,11 @@ namespace asp_net_react_fullstack_app.Server.Controllers
 
             return true;
         }
-
-
-
         
         [HttpPost("register")]
         public IActionResult Register(RegisterModel register)
         {
-            var userCollection = _userService.getCollection();
+            var userCollection = userService.getCollection();
 
             // Check if the username is already taken
             if (IsUsernameTaken(register.Username))
@@ -110,6 +99,7 @@ namespace asp_net_react_fullstack_app.Server.Controllers
             var user = new User
             {
                 Username = register.Username,
+                Role = "user",
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt
             };
@@ -118,6 +108,34 @@ namespace asp_net_react_fullstack_app.Server.Controllers
             // Generate JWT token
             var token = GenerateJwtToken(register.Username);
             return Ok(new { token });
+        }
+
+        [Authorize]
+        [HttpGet("me")]
+        public async Task<IActionResult> GetCurrentUser()
+        {
+            if (HttpContext.User.Identity is not ClaimsIdentity identity)
+            {
+                return Unauthorized("Not logged");
+            }
+
+            var username = identity.FindFirst(ClaimTypes.Name)?.Value;
+            if (username == null)
+            {
+                return Unauthorized("Not logged");
+            }
+
+            var user = await userService.GetUserByUsernameAsync(username);
+            if (user == null)
+            {
+                return Unauthorized("User not found");
+            }
+
+            return Ok(new
+            {
+                Username = user.Username,
+                Role = user.Role
+            });
         }
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
@@ -129,7 +147,7 @@ namespace asp_net_react_fullstack_app.Server.Controllers
 
         private bool IsUsernameTaken(string username)
         {
-            var userCollection = _userService.getCollection();
+            var userCollection = userService.getCollection();
             
             var user = userCollection.Find(u => u.Username == username).FirstOrDefault();
             return user != null;
@@ -148,4 +166,5 @@ namespace asp_net_react_fullstack_app.Server.Controllers
         public string Password { get; set; }
         // You can add more properties as needed, such as email, name, etc.
     }
+
 }
