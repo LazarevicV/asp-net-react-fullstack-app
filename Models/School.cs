@@ -8,10 +8,6 @@ public class School
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string? Id { get; set; }
-    
     public string? Name { get; set; }
-
-    public string? Role { get; set; }
-    
     public List<string>? Courses { get; set; }
 }

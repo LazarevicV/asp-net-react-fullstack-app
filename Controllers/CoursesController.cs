@@ -9,7 +9,9 @@ namespace asp_net_react_fullstack_app.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CoursesController(CoursesService coursesService, IWebHostEnvironment environment) : ControllerBase
+    public class CoursesController(CoursesService coursesService, IWebHostEnvironment environment, SchoolsService
+            schoolsService) :
+        ControllerBase
     {
         // GET: api/Courses
         [HttpGet]
@@ -79,8 +81,19 @@ namespace asp_net_react_fullstack_app.Server.Controllers
             course.Id = ObjectId.GenerateNewId().ToString();
             await coursesService.CreateCourseAsync(course);
 
+            // Update corresponding school
+            var schools = await schoolsService.GetAllSchoolAsync();
+            var matchingSchool = schools.FirstOrDefault(s => s.Name == course.School);
+
+            if (matchingSchool != null)
+            {
+                matchingSchool.Courses.Add(course.Id);
+                await schoolsService.UpdateSchoolAsync(matchingSchool.Id, matchingSchool);
+            }
+
             return CreatedAtAction(nameof(GetCourse), new { id = course.Id }, course);
         }
+
 
         // PUT api/Courses/5
         [HttpPut("{id}")]
@@ -102,11 +115,16 @@ namespace asp_net_react_fullstack_app.Server.Controllers
                 return NotFound();
             }
 
+            var originalSchoolName = existingCourse.School;
+
             existingCourse.Title = courseDto.Title;
             existingCourse.Category = courseDto.Category;
             existingCourse.Description = courseDto.Description;
             existingCourse.Link = courseDto.Link;
             existingCourse.School = courseDto.School;
+
+            // Console.WriteLine("original school name" + originalSchoolName);
+            // Console.WriteLine("existing course school" + existingCourse.School);
 
             if (courseDto.File != null)
             {
@@ -141,6 +159,30 @@ namespace asp_net_react_fullstack_app.Server.Controllers
 
             await coursesService.UpdateCourseAsync(objectId, existingCourse);
 
+            // Update schools if the school name has changed
+            if (existingCourse.School != originalSchoolName)
+            {
+                // Fetch all schools
+                var schools = await schoolsService.GetAllSchoolAsync();
+
+                foreach (var school in schools)
+                {
+                    // If the course was previously associated with this school, remove it
+                    if (school.Courses.Contains(existingCourse.Id))
+                    {
+                        school.Courses.Remove(existingCourse.Id);
+                        await schoolsService.UpdateSchoolAsync(school.Id, school);
+                    }
+
+                    // If the course is now associated with this school, add it
+                    if (school.Name == existingCourse.School)
+                    {
+                        school.Courses.Add(existingCourse.Id);
+                        await schoolsService.UpdateSchoolAsync(school.Id, school);
+                    }
+                }
+            }
+
             return NoContent();
         }
 
@@ -154,9 +196,21 @@ namespace asp_net_react_fullstack_app.Server.Controllers
                 return NotFound();
             }
 
-            await coursesService.DeleteCourseAsync(id.ToString());
+            // Get the corresponding school
+            var schools = await schoolsService.GetAllSchoolAsync();
+            var matchingSchool = schools.FirstOrDefault(s => s.Name == course.School);
+
+            if (matchingSchool != null)
+            {
+                // Remove the course ID from the school's Courses array
+                matchingSchool.Courses.Remove(id);
+                await schoolsService.UpdateSchoolAsync(matchingSchool.Id, matchingSchool);
+            }
+
+            await coursesService.DeleteCourseAsync(id);
             return NoContent();
         }
+
 
         // GET: api/Course/Categories
         [HttpGet("Categories")]
