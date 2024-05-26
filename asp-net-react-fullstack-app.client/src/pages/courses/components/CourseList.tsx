@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { cx } from "../../../lib/utils";
+import { cn } from "../../../lib/utils";
 import { CourseType } from "../../../lib/types";
 import { CourseCard } from "./CourseCard";
 import { Route } from "../../../routes/courses";
@@ -29,10 +29,11 @@ const CourseList: React.FC<{
     });
   }, [search, filter]);
 
-  if (filteredCourses.length === 0) return <div>No courses found</div>;
+  if (filteredCourses.length === 0)
+    return <div className="text-center w-full">No courses found</div>;
 
   return (
-    <div className={cx("flex flex-col gap-4", className)}>
+    <div className={cn("grid gap-4 grid-cols-1 ", className)}>
       {filteredCourses.map((course) => (
         <CourseCard course={course} />
       ))}

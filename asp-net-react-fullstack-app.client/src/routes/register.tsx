@@ -1,6 +1,7 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { RegisterPage } from "../pages/register/RegisterPage";
 import { TOKEN_KEY } from "../lib/constants";
+import { PageSection } from "@/components/PageSection";
 
 export const Route = createFileRoute("/register")({
   beforeLoad: async () => {
@@ -13,5 +14,9 @@ export const Route = createFileRoute("/register")({
     }
   },
 
-  component: () => <RegisterPage />,
+  component: () => (
+    <PageSection>
+      <RegisterPage />
+    </PageSection>
+  ),
 });
