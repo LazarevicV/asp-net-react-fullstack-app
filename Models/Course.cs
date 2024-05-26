@@ -19,4 +19,6 @@ public class Course
     public string? Link { get; set; }
     
     public string? School { get; set; }
+
+    public string? FilePath { get; set; }
 }

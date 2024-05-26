@@ -9,7 +9,7 @@ namespace asp_net_react_fullstack_app.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CoursesController(CoursesService coursesService) : ControllerBase
+    public class CoursesController(CoursesService coursesService, IWebHostEnvironment environment) : ControllerBase
     {
         // GET: api/Courses
         [HttpGet]
@@ -39,14 +39,46 @@ namespace asp_net_react_fullstack_app.Server.Controllers
 
         // POST api/Courses
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Course course)
+        public async Task<IActionResult> Post([FromForm] CourseDto courseDto)
         {
-            if (course == null)
+            if (courseDto == null)
             {
                 return BadRequest("Course is null.");
             }
 
+            var course = new Course
+            {
+                Title = courseDto.Title,
+                Category = courseDto.Category,
+                Description = courseDto.Description,
+                Link = courseDto.Link,
+                School = courseDto.School
+            };
+
+            if (courseDto.File != null)
+            {
+                var clientProjectPath = Path.Combine(environment.ContentRootPath, ".", "asp-net-react-fullstack-app.client");
+                var uploadsFolderPath = Path.Combine(clientProjectPath, "public");
+
+                if (!Directory.Exists(uploadsFolderPath))
+                {
+                    Directory.CreateDirectory(uploadsFolderPath);
+                }
+
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + courseDto.File.FileName;
+                var filePath = Path.Combine(uploadsFolderPath, uniqueFileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await courseDto.File.CopyToAsync(stream);
+                }
+
+                course.FilePath = "/public/" + uniqueFileName; // Store the relative path to the file
+            }
+
+            course.Id = ObjectId.GenerateNewId().ToString();
             await coursesService.CreateCourseAsync(course);
+
             return CreatedAtAction(nameof(GetCourse), new { id = course.Id }, course);
         }
 
@@ -76,6 +108,16 @@ namespace asp_net_react_fullstack_app.Server.Controllers
         {
             var categories = await coursesService.GetAllCategoriesAsync();
             return Ok(categories);
+        }
+
+        public class CourseDto
+        {
+            public string? Title { get; set; }
+            public string? Category { get; set; }
+            public string? Description { get; set; }
+            public string? Link { get; set; }
+            public string? School { get; set; }
+            public IFormFile? File { get; set; } // For file upload
         }
     }
 }
