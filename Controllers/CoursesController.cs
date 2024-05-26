@@ -82,10 +82,66 @@ namespace asp_net_react_fullstack_app.Server.Controllers
             return CreatedAtAction(nameof(GetCourse), new { id = course.Id }, course);
         }
 
-        // PUT api/<CoursesController>/5
+        // PUT api/Courses/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(string id, [FromForm] CourseDto courseDto)
         {
+            if (courseDto == null)
+            {
+                return BadRequest("Course is null.");
+            }
+
+            if (!ObjectId.TryParse(id, out ObjectId objectId))
+            {
+                return BadRequest("Invalid ObjectId format.");
+            }
+
+            var existingCourse = await coursesService.GetCourseByIdAsync(objectId);
+            if (existingCourse == null)
+            {
+                return NotFound();
+            }
+
+            existingCourse.Title = courseDto.Title;
+            existingCourse.Category = courseDto.Category;
+            existingCourse.Description = courseDto.Description;
+            existingCourse.Link = courseDto.Link;
+            existingCourse.School = courseDto.School;
+
+            if (courseDto.File != null)
+            {
+                var clientProjectPath = Path.Combine(environment.ContentRootPath, ".", "asp-net-react-fullstack-app.client");
+                var uploadsFolderPath = Path.Combine(clientProjectPath, "public");
+
+                if (!Directory.Exists(uploadsFolderPath))
+                {
+                    Directory.CreateDirectory(uploadsFolderPath);
+                }
+
+                var uniqueFileName = courseDto.File.FileName;
+                var filePath = Path.Combine(uploadsFolderPath, uniqueFileName);
+
+                // Ensure file name is unique by checking if the file already exists
+                var counter = 1;
+                while (System.IO.File.Exists(filePath))
+                {
+                    var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(uniqueFileName);
+                    var extension = Path.GetExtension(uniqueFileName);
+                    uniqueFileName = $"{fileNameWithoutExtension}_{counter}{extension}";
+                    filePath = Path.Combine(uploadsFolderPath, uniqueFileName);
+                    counter++;
+                }
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await courseDto.File.CopyToAsync(stream);
+                }
+                existingCourse.FilePath = "/public/" + uniqueFileName; // Store the relative path to the file
+            }
+
+            await coursesService.UpdateCourseAsync(objectId, existingCourse);
+
+            return NoContent();
         }
 
         // DELETE api/Courses/5
