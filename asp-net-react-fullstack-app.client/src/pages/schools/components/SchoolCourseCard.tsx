@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 
-import { cx } from "../../../lib/utils";
+import { cn } from "../../../lib/utils";
 import { api } from "../../../services/api";
 import { CourseType } from "../../../lib/types";
 import { QUERY_KEYS } from "../../../lib/constants";
@@ -26,7 +26,7 @@ const SchoolCourseCard: React.FC<{ className?: string; courseId: string }> = ({
   if (isError) return <div>Error</div>;
 
   return (
-    <li className={cx(" ", className)}>
+    <li className={cn("underline pl-5", className)}>
       <Link
         to={"/courses"}
         search={{

@@ -1,16 +1,10 @@
 import React from "react";
-import { cx } from "../../lib/utils";
-import { CourseType } from "../../lib/types";
-import { api } from "../../services/api";
+import { cn } from "../../lib/utils";
 import { QUERY_KEYS } from "../../lib/constants";
 import { useQuery } from "@tanstack/react-query";
 import { CourseList } from "./components/CourseList";
 import { SearchCourses } from "./components/SearchCourses";
-
-const getCourses = async (): Promise<CourseType[]> => {
-  const res = await api({ endpoint: "api/Courses" });
-  return res.data;
-};
+import { getCourses } from "@/lib/queries";
 
 const CoursesPage: React.FC<{ className?: string }> = ({ className }) => {
   const { data, isLoading, isError } = useQuery({
@@ -23,7 +17,7 @@ const CoursesPage: React.FC<{ className?: string }> = ({ className }) => {
   if (isError) return <div>Error</div>;
 
   return (
-    <div className={cx(" ", className)}>
+    <div className={cn("max-w-4xl mx-auto flex flex-col gap-4", className)}>
       <SearchCourses />
       <CourseList courses={data || []} />
     </div>

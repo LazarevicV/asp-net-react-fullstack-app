@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 
 import { LoginForm } from "../../components/auth/LoginForm";
-import { cx } from "../../lib/utils";
-import { useNavigate } from "@tanstack/react-router";
+import { cn } from "../../lib/utils";
+import { Link, useNavigate } from "@tanstack/react-router";
 import useAuth from "../../hooks/useAuth";
 
 const LoginPage: React.FC<{ className?: string }> = ({ className }) => {
@@ -16,8 +16,19 @@ const LoginPage: React.FC<{ className?: string }> = ({ className }) => {
   }, [isAuth]);
 
   return (
-    <div className={cx("", className)}>
+    <div
+      className={cn(
+        "w-full h-screen flex flex-col gap-4 justify-center items-center",
+        className
+      )}
+    >
       <LoginForm />
+      <span>
+        Don't have an account?{" "}
+        <Link to="/register" className="underline">
+          Register
+        </Link>
+      </span>
     </div>
   );
 };

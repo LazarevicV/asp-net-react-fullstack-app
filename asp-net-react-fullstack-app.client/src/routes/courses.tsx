@@ -1,6 +1,7 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { CoursesPage } from "../pages/courses/CoursesPage";
 import { TOKEN_KEY } from "../lib/constants";
+import { PageSection } from "@/components/PageSection";
 
 type CoursesSearch = {
   search: string;
@@ -23,5 +24,9 @@ export const Route = createFileRoute("/courses")({
     };
   },
 
-  component: () => <CoursesPage />,
+  component: () => (
+    <PageSection>
+      <CoursesPage />
+    </PageSection>
+  ),
 });

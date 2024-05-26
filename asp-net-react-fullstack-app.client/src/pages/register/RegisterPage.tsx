@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 
-import { cx } from "../../lib/utils";
+import { cn } from "../../lib/utils";
 import useAuth from "../../hooks/useAuth";
 import { RegisterForm } from "../../components/auth/RegisterForm";
 
@@ -16,8 +16,19 @@ const RegisterPage: React.FC<{ className?: string }> = ({ className }) => {
   }, [isAuth]);
 
   return (
-    <div className={cx(" ", className)}>
+    <div
+      className={cn(
+        "h-screen w-full flex justify-center items-center flex-col gap-4",
+        className
+      )}
+    >
       <RegisterForm />
+      <span>
+        Already have account?{" "}
+        <Link to="/login" className="underline">
+          Login
+        </Link>
+      </span>
     </div>
   );
 };
