@@ -41,4 +41,9 @@ public class CoursesService
     {
         await _coursesCollection.DeleteOneAsync(course => course.Id == id);
     }
+
+    public async Task UpdateCourseAsync(ObjectId id, Course updatedCourse)
+    {
+        await _coursesCollection.ReplaceOneAsync(course => course.Id == id.ToString(), updatedCourse);
+    }
 }
