@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.JavaScript;
 using asp_net_react_fullstack_app.Server.Models;
 using asp_net_react_fullstack_app.Server.Services;
 using Microsoft.AspNetCore.Http;
@@ -36,10 +37,17 @@ namespace asp_net_react_fullstack_app.Server.Controllers
             return Ok(course);
         }
 
-        // POST api/<CoursesController>
+        // POST api/Courses
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] Course course)
         {
+            if (course == null)
+            {
+                return BadRequest("Course is null.");
+            }
+
+            await coursesService.CreateCourseAsync(course);
+            return CreatedAtAction(nameof(GetCourse), new { id = course.Id }, course);
         }
 
         // PUT api/<CoursesController>/5
@@ -48,10 +56,18 @@ namespace asp_net_react_fullstack_app.Server.Controllers
         {
         }
 
-        // DELETE api/<CoursesController>/5
+        // DELETE api/Courses/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
+            var course = await coursesService.GetCourseByIdAsync(ObjectId.Parse(id));
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            await coursesService.DeleteCourseAsync(id.ToString());
+            return NoContent();
         }
 
         // GET: api/Course/Categories

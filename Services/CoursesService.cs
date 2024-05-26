@@ -31,4 +31,14 @@ public class CoursesService
     {
         return await _coursesCollection.Find(course => course.Id == id.ToString()).FirstOrDefaultAsync();
     }
+
+    public async Task CreateCourseAsync(Course course)
+    {
+        await _coursesCollection.InsertOneAsync(course);
+    }
+
+    public async Task DeleteCourseAsync(string id)
+    {
+        await _coursesCollection.DeleteOneAsync(course => course.Id == id);
+    }
 }
