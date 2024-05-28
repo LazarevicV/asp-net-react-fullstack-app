@@ -18,7 +18,9 @@ const SchoolsPage: React.FC<{ className?: string }> = ({ className }) => {
   if (isError) return <div>Error</div>;
 
   return (
-    <div className={cn("max-w-4xl mx-auto flex flex-col gap-4", className)}>
+    <div
+      className={cn("max-w-4xl mx-auto flex flex-col gap-4 mb-10", className)}
+    >
       <SearchSchools />
       <SchoolsList schools={data || []} />
     </div>

@@ -11,5 +11,6 @@ export type CourseType = {
     category: string;
     description: string;
     link: string;
+    filePath: string;
     school: string;
 }

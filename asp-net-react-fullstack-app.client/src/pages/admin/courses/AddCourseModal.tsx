@@ -1,39 +1,46 @@
-import { Button } from "@/components/ui/button";
+import React from "react";
+import { toast } from "sonner";
+import { useMutation, useQuery } from "@tanstack/react-query";
+
+import {
+  Select,
+  SelectItem,
+  SelectValue,
+  SelectTrigger,
+  SelectContent,
+} from "@/components/ui/select";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { QUERY_KEYS } from "@/lib/constants";
-import { getCoursesCategories, getSchools, updateCourse } from "@/lib/queries";
 import { CourseType } from "@/lib/types";
+import { QUERY_KEYS } from "@/lib/constants";
+import { Input } from "@/components/ui/input";
 import { queryClient } from "@/routes/__root";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { createCourse, getCoursesCategories, getSchools } from "@/lib/queries";
 
-import React from "react";
-import { toast } from "sonner";
-
-const EditCourseModal: React.FC<{
+const AddCourseModal: React.FC<{
   open: boolean;
-  course: CourseType;
   onOpenChange: (open: boolean) => void;
-}> = ({ open, onOpenChange, course }) => {
+}> = ({ open, onOpenChange }) => {
   const [file, setFile] = React.useState<File | null>(null);
-  const [updatedCourse, setUpdatedCourse] = React.useState<CourseType>(course);
+  const [createdCourse, setCreatedCourse] = React.useState<CourseType>({
+    id: "",
+    title: "",
+    description: "",
+    link: "",
+    category: "",
+    school: "",
+    filePath: "",
+  });
 
   const { mutateAsync } = useMutation({
-    mutationFn: updateCourse,
+    mutationFn: createCourse,
   });
 
   const { data: categories, isLoading: isLoadingCategories } = useQuery({
@@ -47,25 +54,25 @@ const EditCourseModal: React.FC<{
   });
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUpdatedCourse((prev) => ({ ...prev, title: e.target.value }));
+    setCreatedCourse((prev) => ({ ...prev, title: e.target.value }));
   };
 
   const handleEditCategory = (category: string) => {
-    setUpdatedCourse((prev) => ({ ...prev, category }));
+    setCreatedCourse((prev) => ({ ...prev, category }));
   };
 
   const handleDescriptionChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setUpdatedCourse((prev) => ({ ...prev, description: e.target.value }));
+    setCreatedCourse((prev) => ({ ...prev, description: e.target.value }));
   };
 
   const handleLinkChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUpdatedCourse((prev) => ({ ...prev, link: e.target.value }));
+    setCreatedCourse((prev) => ({ ...prev, link: e.target.value }));
   };
 
   const handleSchoolChange = (school: string) => {
-    setUpdatedCourse((prev) => ({ ...prev, school }));
+    setCreatedCourse((prev) => ({ ...prev, school }));
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,18 +84,18 @@ const EditCourseModal: React.FC<{
 
   const handleUpdate = () => {
     if (
-      updatedCourse.title === "" ||
-      updatedCourse.description === "" ||
-      updatedCourse.link === "" ||
-      updatedCourse.category === "" ||
-      updatedCourse.school === ""
+      createdCourse.title === "" ||
+      createdCourse.description === "" ||
+      createdCourse.link === "" ||
+      createdCourse.category === "" ||
+      createdCourse.school === ""
     ) {
       toast.error("All fields are required");
       return;
     }
 
     const mutate = mutateAsync(
-      { ...updatedCourse, file: file },
+      { ...createdCourse, file: file },
       {
         onSettled: () => {
           queryClient.invalidateQueries({
@@ -112,17 +119,15 @@ const EditCourseModal: React.FC<{
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[600px] overflow-scroll">
         <DialogHeader>
-          <h3>Edit Course</h3>
+          <h3>Add Course</h3>
           <DialogDescription>
-            <p>Editing course: {course.title}</p>
-
             <div className="flex flex-col gap-4 mt-10">
               <Label>
                 Title
                 <Input
                   onChange={handleTitleChange}
                   type="text"
-                  value={updatedCourse.title}
+                  value={createdCourse.title}
                 />
               </Label>
               <div className="flex items-center gap-10 ">
@@ -133,7 +138,7 @@ const EditCourseModal: React.FC<{
                   disabled={isLoadingCategories}
                 >
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder={course.category} />
+                    <SelectValue placeholder={"Select category"} />
                   </SelectTrigger>
                   <SelectContent>
                     {categories?.map((category) => (
@@ -148,7 +153,7 @@ const EditCourseModal: React.FC<{
               <Label>
                 Description
                 <Textarea
-                  value={updatedCourse.description}
+                  value={createdCourse.description}
                   onChange={handleDescriptionChange}
                   className="h-[250px]"
                 />
@@ -158,7 +163,7 @@ const EditCourseModal: React.FC<{
                 <Input
                   onChange={handleLinkChange}
                   type="text"
-                  value={updatedCourse.link}
+                  value={createdCourse.link}
                 />
               </Label>
               <div className="flex items-center gap-10">
@@ -168,7 +173,7 @@ const EditCourseModal: React.FC<{
                   disabled={isLoadingSchools}
                 >
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder={course.school} />
+                    <SelectValue placeholder={"Select school"} />
                   </SelectTrigger>
                   <SelectContent>
                     {schools?.map((schools) => (
@@ -180,18 +185,12 @@ const EditCourseModal: React.FC<{
                 </Select>
               </div>
 
-              {updatedCourse.filePath && (
-                <div className="flex items-center justify-between">
-                  Current file:{" "}
-                  <img className="max-h-[150px]" src={updatedCourse.filePath} />
-                </div>
-              )}
               <Label>
                 File
                 <Input onChange={handleFileChange} type="file" />
               </Label>
 
-              <Button onClick={handleUpdate}>Update</Button>
+              <Button onClick={handleUpdate}>Create</Button>
             </div>
           </DialogDescription>
         </DialogHeader>
@@ -200,4 +199,4 @@ const EditCourseModal: React.FC<{
   );
 };
 
-export { EditCourseModal };
+export { AddCourseModal };

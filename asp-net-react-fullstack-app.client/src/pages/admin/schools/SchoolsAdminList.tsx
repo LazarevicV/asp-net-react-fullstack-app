@@ -23,8 +23,8 @@ const SchoolsAdminList: React.FC<{ className?: string }> = ({ className }) => {
             <h3>{school.name}</h3>
           </CardHeader>
           <CardContent className="flex gap-2 mt-6">
-            <Edit className="stroke-gray-500 cursor-pointer hover:stroke-gray-800" />
-            <Trash className="stroke-red-500 cursor-pointer hover:stroke-red-800" />
+            <Edit className="stroke-gray-500 hover:stroke-gray-800 opacity-50 cursor-not-allowed" />
+            <Trash className="stroke-red-500 hover:stroke-red-800 opacity-50 cursor-not-allowed" />
           </CardContent>
         </Card>
       ))}

@@ -23,9 +23,16 @@ const CourseCard: React.FC<{ className?: string; course: CourseType }> = ({
   course,
 }) => {
   return (
-    <Card className={cn("", className)}>
-      <CardHeader>
-        <h3 className="text-2xl">{course.title}</h3>
+    <Card className={cn("overflow-hidden h-fit", className)}>
+      <div>
+        <img
+          src={course.filePath || "/default.png"}
+          alt={course.title}
+          className="w-full h-[250px] object-cover"
+        />
+      </div>
+      <CardHeader className="">
+        <h3 className="text-3xl font-semibold h-[35px]">{course.title}</h3>
       </CardHeader>
 
       <CardContent>
