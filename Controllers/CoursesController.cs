@@ -75,7 +75,7 @@ namespace asp_net_react_fullstack_app.Server.Controllers
                     await courseDto.File.CopyToAsync(stream);
                 }
 
-                course.FilePath = "/public/" + uniqueFileName; // Store the relative path to the file
+                course.FilePath =  uniqueFileName; // Store the relative path to the file
             }
 
             course.Id = ObjectId.GenerateNewId().ToString();
