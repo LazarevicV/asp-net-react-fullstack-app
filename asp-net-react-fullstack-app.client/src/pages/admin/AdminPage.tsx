@@ -8,10 +8,10 @@ import { SchoolsTab } from "./schools/SchoolsTab";
 const AdminPage: React.FC<{ className?: string }> = ({ className }) => {
   return (
     <div className={cn("w-full flex justify-center items-center", className)}>
-      <Tabs defaultValue="schools" className="max-w-4xl w-full">
+      <Tabs defaultValue="courses" className="max-w-4xl w-full">
         <TabsList>
-          <TabsTrigger value="schools">Schools</TabsTrigger>
           <TabsTrigger value="courses">Courses</TabsTrigger>
+          <TabsTrigger value="schools">Schools</TabsTrigger>
         </TabsList>
         <TabsContent value="schools">
           <SchoolsTab />
