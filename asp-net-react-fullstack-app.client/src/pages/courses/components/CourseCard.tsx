@@ -37,8 +37,15 @@ const CourseCard: React.FC<{ className?: string; course: CourseType }> = ({
                 <p>{course.description}</p>
                 <div className="ml-auto">
                   <Button variant="ghost" className="flex gap-2">
-                    Check course
-                    <ExternalLink />
+                    <a
+                      href={course.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2"
+                    >
+                      Check course
+                      <ExternalLink />
+                    </a>
                   </Button>
                 </div>
               </AccordionContent>
