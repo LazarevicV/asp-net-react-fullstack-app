@@ -33,7 +33,9 @@ const CourseList: React.FC<{
     return <div className="text-center w-full">No courses found</div>;
 
   return (
-    <div className={cn("grid gap-4 grid-cols-1 ", className)}>
+    <div
+      className={cn("grid gap-4 grid-cols-1 md:grid-cols-2 mb-10", className)}
+    >
       {filteredCourses.map((course) => (
         <CourseCard course={course} />
       ))}
