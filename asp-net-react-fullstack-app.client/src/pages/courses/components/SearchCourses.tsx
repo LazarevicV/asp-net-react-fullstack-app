@@ -1,6 +1,5 @@
 import React from "react";
 import { cn } from "../../../lib/utils";
-import { api } from "../../../services/api";
 import { QUERY_KEYS } from "../../../lib/constants";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
@@ -14,11 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-const getCoursesCategories = async (): Promise<string[]> => {
-  const res = await api({ endpoint: "api/Courses/Categories" });
-  return res.data;
-};
+import { getCoursesCategories } from "@/lib/queries";
 
 const SearchCourses: React.FC<{
   className?: string;
