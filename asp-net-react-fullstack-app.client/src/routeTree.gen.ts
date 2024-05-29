@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as SchoolsImport } from './routes/schools'
+import { Route as RoadmapsImport } from './routes/roadmaps'
 import { Route as RegisterImport } from './routes/register'
 import { Route as LoginImport } from './routes/login'
 import { Route as CoursesImport } from './routes/courses'
@@ -22,6 +23,11 @@ import { Route as IndexImport } from './routes/index'
 
 const SchoolsRoute = SchoolsImport.update({
   path: '/schools',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const RoadmapsRoute = RoadmapsImport.update({
+  path: '/roadmaps',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -89,6 +95,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterImport
       parentRoute: typeof rootRoute
     }
+    '/roadmaps': {
+      id: '/roadmaps'
+      path: '/roadmaps'
+      fullPath: '/roadmaps'
+      preLoaderRoute: typeof RoadmapsImport
+      parentRoute: typeof rootRoute
+    }
     '/schools': {
       id: '/schools'
       path: '/schools'
@@ -107,6 +120,7 @@ export const routeTree = rootRoute.addChildren({
   CoursesRoute,
   LoginRoute,
   RegisterRoute,
+  RoadmapsRoute,
   SchoolsRoute,
 })
 

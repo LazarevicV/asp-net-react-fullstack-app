@@ -1,5 +1,5 @@
 import { api } from "@/services/api";
-import { CourseType, SchoolType } from "./types";
+import { CourseType, Roadmap, SchoolType } from "./types";
 
 export const getCourses = async (): Promise<CourseType[]> => {
   const res = await api({ endpoint: "api/Courses" });
@@ -67,3 +67,11 @@ export const createCourse = async (course: CourseType & { file: File | null }) =
     },
   });
 };
+
+export const getRoadmaps = async (): Promise<Roadmap[]> => {
+ const res = await  api({
+    endpoint: `api/Roadmaps`,
+ });
+  
+  return res.data
+}
