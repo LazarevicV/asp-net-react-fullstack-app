@@ -14,3 +14,10 @@ export type CourseType = {
     filePath: string;
     school: string;
 }
+
+export type Roadmap = {
+    id: string;
+    name: string;
+    description: string;
+    courses: string[];
+}

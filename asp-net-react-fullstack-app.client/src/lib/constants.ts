@@ -6,4 +6,5 @@ export const QUERY_KEYS = {
     COURSE: "course",
     COURSES: 'courses',
     COURSES_CATEGORIES: 'courses_categories',
+    ROADMAPS: 'roadmaps',
 }

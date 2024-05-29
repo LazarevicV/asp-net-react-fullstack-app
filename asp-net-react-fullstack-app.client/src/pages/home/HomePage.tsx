@@ -6,7 +6,7 @@ const HomePage: React.FC<{ className?: string }> = ({ className }) => {
   return (
     <div
       className={cn(
-        "relative overflow-hidden before:absolute before:top-0 before:start-1/2 before:bg-[url('https://preline.co/assets/svg/examples/polygon-bg-element.svg')] before:bg-no-repeat before:bg-top before:bg-cover before:size-full before:-z-[1] before:transform before:-translate-x-1/2",
+        "relative overflow-hidden before:absolute before:top-0 before:start-1/2 before:bg-[url('https://preline.co/assets/svg/examples/polygon-bg-element.svg')] dark:before:bg-[url('https://preline.co/assets/svg/examples-dark/polygon-bg-element.svg')] before:bg-no-repeat before:bg-top before:bg-cover before:size-full before:-z-[1] before:transform before:-translate-x-1/2",
         className
       )}
     >
@@ -40,7 +40,7 @@ const HomePage: React.FC<{ className?: string }> = ({ className }) => {
         </div>
 
         <div className="mt-5 max-w-2xl text-center mx-auto">
-          <h1 className="block font-bold text-gray-800 text-4xl md:text-5xl lg:text-6xl">
+          <h1 className="block font-bold dark:text-gray-300 text-gray-800 text-4xl md:text-5xl lg:text-6xl">
             Welcome to{" "}
             <span className="bg-clip-text bg-gradient-to-tl from-blue-600 to-violet-600 text-transparent">
               e Learning
@@ -49,7 +49,7 @@ const HomePage: React.FC<{ className?: string }> = ({ className }) => {
         </div>
 
         <div className="mt-5 max-w-3xl text-center mx-auto">
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-gray-600 dark:text-gray-400">
             e Learning is a platform where you can learn and share your
             knowledge with others. We have a wide range of courses from
             different fields. You can also create your own courses and share it.

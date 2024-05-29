@@ -50,7 +50,7 @@ export const Route = createRootRoute({
               </Sheet>
               <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
                 <div className="ml-auto">
-                  <UserDropDown />
+                  <UserActions />
                 </div>
               </div>
             </header>
@@ -68,7 +68,7 @@ export const Route = createRootRoute({
 });
 
 const Navigation = () => {
-  const { user } = useAuth();
+  const { user, isAuth } = useAuth();
 
   return (
     <>
@@ -82,23 +82,30 @@ const Navigation = () => {
       <Link to="/" className="[&.active]:font-bold">
         Home
       </Link>{" "}
-      <Link
-        to="/courses"
-        className="[&.active]:font-bold"
-        search={{
-          filter: "",
-          search: "",
-        }}
-      >
-        Courses
-      </Link>{" "}
-      <Link
-        to="/schools"
-        className="[&.active]:font-bold"
-        search={{ search: "" }}
-      >
-        Schools
-      </Link>
+      {isAuth && (
+        <>
+          <Link
+            to="/courses"
+            className="[&.active]:font-bold"
+            search={{
+              filter: "",
+              search: "",
+            }}
+          >
+            Courses
+          </Link>{" "}
+          <Link
+            to="/schools"
+            className="[&.active]:font-bold"
+            search={{ search: "" }}
+          >
+            Schools
+          </Link>
+          <Link to="/roadmaps" className="[&.active]:font-bold">
+            Roadmaps
+          </Link>
+        </>
+      )}
       {user?.role === "admin" && (
         <Link to="/admin" className="[&.active]:font-bold">
           Admin
@@ -107,7 +114,7 @@ const Navigation = () => {
     </>
   );
 };
-const UserDropDown = () => {
+const UserActions = () => {
   const { isAuth, logout, user } = useAuth();
 
   const [dark, setDark] = useState(false);
@@ -117,8 +124,6 @@ const UserDropDown = () => {
     document.body.classList.toggle("dark");
   };
 
-  if (!isAuth) return <></>;
-
   return (
     <div className="flex items-center space-x-4">
       <div className="bg-yellow text-2xl">
@@ -127,19 +132,29 @@ const UserDropDown = () => {
           {!dark && <IoMoon />}
         </button>
       </div>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="secondary" size="icon" className="rounded-full">
-            <CircleUser className="h-5 w-5" />
-            <span className="sr-only">Toggle user menu</span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>{user?.username}</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      {isAuth ? (
+        <>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="secondary" size="icon" className="rounded-full">
+                <CircleUser className="h-5 w-5" />
+                <span className="sr-only">Toggle user menu</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>{user?.username}</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </>
+      ) : (
+        <>
+          <Link to="/login" className="btn btn-primary">
+            Sign in
+          </Link>
+        </>
+      )}
     </div>
   );
 };

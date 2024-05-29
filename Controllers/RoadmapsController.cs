@@ -7,7 +7,7 @@ namespace asp_net_react_fullstack_app.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RoadmapController(RoadmapsService roadmapsService) : ControllerBase
+    public class RoadmapsController(RoadmapsService roadmapsService) : ControllerBase
     {
         // GET: api/<RoadmapController>
         [HttpGet]
