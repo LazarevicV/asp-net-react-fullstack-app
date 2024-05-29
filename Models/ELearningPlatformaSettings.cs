@@ -11,4 +11,6 @@ public class ELearningPlatformaSettings
     public string SchoolsCollectionName { get; set; } = null!;
     
     public string UsersCollectionName { get; set; } = null!;
+
+    public string RoadmapsCollectionName { get; set; } = null!;
 }

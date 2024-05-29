@@ -4,6 +4,7 @@ using System.Text;
 using asp_net_react_fullstack_app.Server.Models;
 using asp_net_react_fullstack_app.Server.Services;
 using asp_net_react_fullstack_app.Server.Migrations;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +37,7 @@ builder.Services.AddScoped<DBService>();
 builder.Services.AddScoped<CoursesService>();
 builder.Services.AddScoped<SchoolsService>();
 builder.Services.AddScoped<UsersService>();
+builder.Services.AddScoped<RoadmapsService>();
 
 // Configure JWT authentication
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
@@ -70,6 +72,7 @@ using (var scope = app.Services.CreateScope())
 
         var coursesCount = await dbService.GetCollectionCountAsync("Courses");
         var schoolsCount = await dbService.GetCollectionCountAsync("Schools");
+        var roadmapsCount = await dbService.GetCollectionCountAsync("Roadmaps");
 
         if (coursesCount < 1) // checks if there is no data in the database
         {
@@ -82,6 +85,12 @@ using (var scope = app.Services.CreateScope())
             // Seed school data
             var schoolMigrationService = new SchoolSeeder(dbService.service);
             await schoolMigrationService.SeedSchoolDataAsync();
+        }
+
+        if (roadmapsCount < 1)
+        {
+            var roadmapsMigrationService = new RoadmapSeeder(dbService.service);
+            await roadmapsMigrationService.SeedRoadmapData();
         }
     }
     catch (Exception ex)
