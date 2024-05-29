@@ -7,13 +7,10 @@ This is a monorepo containing a backend built with ASP.NET and a frontend built 
 ## Table of Contents
 
 - [Project Structure](#project-structure)
-  - [Backend Setup](#backend-setup)
-  - [Frontend Setup](#frontend-setup)
-- [Running the Application](#running-the-application)
-- [Building the Application](#building-the-application)
-- [Testing](#testing)
+  - [Prerequisites](#prerequisites)
+  - [Running Backend](#running-backend)
+  - [Running Frontend](#running-frontend)
 - [Contributors](#contributors)
-- [License](#license)
 
 ## Project Structure
 
@@ -36,18 +33,21 @@ This is a monorepo containing a backend built with ASP.NET and a frontend built 
 │ ├  ├  ├── services \
 │ ├  ├  ├── package.json
 
-### Backend Setup
-TODO
+### Prerequisites
+- [.NET SDK](https://dotnet.microsoft.com/download)
+- [Node.js and npm](https://nodejs.org/)
+- [MongoDB](https://www.mongodb.com/try/download/community)
 
-### Frontend Setup
-TODO
+### Running Backend
+1. Run mongodb shell
+2. Open app in prefered IDE
+3. Run app
 
-## Running the Application
-TODO
-
-## Building the Application
-TODO
+### Running Frontend
+1. ```cd asp-net-react-fullstack-app.client```
+2. ```npm install```
+3. ```npm run dev```
 
 ## Contributors
-@markobozic346
-@LazarevicV
+@markobozic346 - IT 67 21\
+@LazarevicV - IT 74 21
