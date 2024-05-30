@@ -101,6 +101,128 @@ namespace asp_net_react_fullstack_app.Server.Migrations
                         Link = "https://alison.com/course/understanding-the-inner-workings-of-the-economy",
                         School = "Alison"
                     },
+
+                    new() {
+                        Title = "Health and medicine",
+                        Category = "Science",
+                        Description = "Dive into the intricate world of the human body with this course! Designed to demystify complex medical terminology and concepts, it aims to make the fascinating field of health and medicine accessible to everyone, from patients and their families to aspiring health professionals.",
+                        Link = "https://www.khanacademy.org/science/health-and-medicine",
+                        School = "Khan Academy"
+                    },
+
+                    new() {
+                        Title = "Accessibility and inclusion in digital health",
+                        Category = "Psychology",
+                        Description = "In this free course, Accessibility and inclusion in digital health, you will consider some of the ways that people can access digital health in the UK and how they are able to take more control over their physical and mental health. This OpenLearn course is an adapted extract from the Open University course K102 Introducing health and social care.",
+                        Link = "https://www.open.edu/openlearn/health-sports-psychology/accessibility-and-inclusion-digital-health/content-section-0?active-tab=description-tab",
+                        School = "The Open University"
+                    },
+
+                    new() {
+                        Title = "UCx: Mental Health and Nutrition",
+                        Category = "Health",
+                        Description = "Learn what foods and nutrients should and should not be consumed to improve mental wellbeing and explore the fundamental role that nutrition plays in our mental health.",
+                        Link = "https://www.edx.org/learn/nutrition/university-of-canterbury-mental-health-and-nutrition?index=product&objectID=course-7b36cc3e-d414-4602-95b7-c96e32311456&webview=false&campaign=Mental+Health+and+Nutrition&source=edX&product_category=course&placement_url=https%3A%2F%2Fwww.edx.org%2Flearn%2Fnutrition",
+                        School = "EDX"
+                    },
+
+                    new() {
+                        Title = "Introduction to Molecular and Cellular Biology",
+                        Category = "Biology",
+                        Description = "This course is designed for students who want to learn about and appreciate basic biological topics while studying the smallest units of biology: molecules and cells. Molecular and cellular biology is a dynamic discipline. There are thousands of opportunities within the medical, pharmaceutical, agricultural, and industrial fields. In addition to preparing you for a diversity of career paths, understanding molecular and cell biology will help you make sound decisions that can benefit your diet and health.",
+                        Link = "https://learn.saylor.org/course/view.php?id=349%5C",
+                        School = "Saylor"
+                    },
+
+                    new() {
+                        Title = "Introduction to Public Health",
+                        Category = "Health",
+                        Description = "This course will explore the history, functions and science of public health. First, we will examine the role of government in public health, including its significant branches such as population and informatics. Next, we will discuss the meaningful epidemiologic functions, the measurement of disease incidence and the study of disease outbreaks. In addition, we will learn about public health ethics and human rights.",
+                        Link = "https://alison.com/course/introduction-to-public-health",
+                        School = "Alison"
+                    },
+
+                    new() {
+                        Title = "Introduction to Public Health",
+                        Category = "Art",
+                        Description = "A brief introduction to art history. We understand the history of humanity through art. From prehistoric depictions of bison to contemporary abstraction, artists have addressed their time and place in history and expressed universal truths for tens of thousands of years.",
+                        Link = "https://www.khanacademy.org/humanities/art-history",
+                        School = "Khan Academy"
+                    },
+
+                    new() {
+                        Title = "Art in Renaissance Venice",
+                        Category = "Art",
+                        Description = "Art in Renaissance VeniceCreative commons Icon\nCourse description\nCourse content\nCourse reviews\nThis free course, Art in Renaissance Venice, considers the art of Renaissance Venice and how such art was determined in many ways by the city's geographical location and ethnically diverse population. Studying Venice and its art offers a challenge to the conventional notion of Renaissance art as an entirely Italian phenomenon.",
+                        Link = "https://www.open.edu/openlearn/history-the-arts/visual-art/art-renaissance-venice/content-section-0?active-tab=description-tab",
+                        School = "The Open University"
+                    },
+
+                    new() {
+                        Title = "LCIEducation: Introduction to Illustrator",
+                        Category = "Art",
+                        Description = "Create your own logos, icons, diagrams and other visual content according to graphic design industry standards with this introductory course to Adobe Illustrator.",
+                        Link = "https://www.edx.org/learn/design/lci-education-introduction-to-illustrator?index=product&objectID=course-e4ef6680-1128-4c26-95a0-56826921a20b&webview=false&campaign=Introduction+to+Illustrator&source=edX&product_category=course&placement_url=https%3A%2F%2Fwww.edx.org%2Flearn%2Fart",
+                        School = "EDX"
+                    },
+
+                    new() {
+                        Title = "ARTH101: Art Appreciation",
+                        Category = "Art",
+                        Description = "This course explores visual art forms and their cultural connections across historical periods, designed for students with little experience in the visual arts. It includes brief studies in art history and in-depth inquiry into the elements, media, and methods used in a range of creative processes. At the beginning of this course, we will study a five-step system for developing an understanding of visual art in all forms. After completing this course, you will be able to interpret works of art based on this five-step system, explain the processes involved in artistic production, identify the many kinds of issues that artists examine in their work, and explain the role and effect of the visual arts in different social, historical and cultural contexts.",
+                        Link = "https://learn.saylor.org/course/view.php?id=701",
+                        School = "Saylor"
+                    },
+
+                    new() {
+                        Title = "Introduction to Art Therapy\n",
+                        Category = "Art",
+                        Description = "Art therapy is a type of psychotherapy that uses art as a form of communication between the therapist and the patient to treat a wide range of mental health conditions. In this psychotherapy course, we explore the concepts and practices of art therapy to help you engage in therapeutic art activities with your clients. We provide the skills you need to confidently work with clients of all artistic abilities in a variety of settings.",
+                        Link = "https://alison.com/course/introduction-to-art-therapy",
+                        School = "Alison"
+                    },
+
+                    new() {
+                        Title = "Introduction to Mathematical Thinking",
+                        Category = "Mathematics",
+                        Description = "Learn how to think the way mathematicians do – a powerful cognitive process developed over thousands of years.Mathematical thinking is not the same as doing mathematics – at least not as mathematics is typically presented in our school system. School math typically focuses on learning procedures to solve highly stereotyped problems. Professional mathematicians think a certain way to solve real problems, problems that can arise from the everyday world, or from science, or from within mathematics itself. The key to success in school math is to learn to think inside-the-box. In contrast, a key feature of mathematical thinking is thinking outside-the-box – a valuable ability in today’s world. This course helps to develop that crucial way of thinking.",
+                        Link = "https://www.coursera.org/learn/mathematical-thinking",
+                        School = "Coursera"
+                    },
+
+                    new() {
+                        Title = "Babylonian mathematics",
+                        Category = "Mathematics",
+                        Description = "This free course looks at Babylonian mathematics. You will learn how a series of discoveries has enabled historians to decipher stone tablets and study the various techniques the Babylonians used for problem-solving and teaching. The Babylonian problem-solving skills have been described as remarkable and scribes of the time received a training far in advance of anything available in medieval Christian Europe 3000 years later.",
+                        Link = "https://www.open.edu/openlearn/science-maths-technology/mathematics-statistics/babylonian-mathematics/content-section-0?active-tab=description-tab",
+                        School = "The Open University"
+                    },
+
+                    new() {
+                        Title = "Algebraic Methods, Graphs and Applied Mathematics Methods",
+                        Category = "Mathematics",
+                        Description = "This course by Imperial College London is designed to help you develop the skills you need to succeed in your A-level maths exams. You will investigate key topic areas to gain a deeper understanding of the skills and techniques that you can apply throughout your A-level study. ",
+                        Link = "https://www.edx.org/learn/math/imperial-college-london-a-level-mathematics-for-year-12-course-1-algebraic-methods-graphs-and-applied-mathematics-methods?index=product&objectID=course-37a24f56-f624-41f2-859f-fda43f451e54&webview=false&campaign=A-level+Mathematics+for+Year+12+-+Course+1%3A+Algebraic+Methods%2C+Graphs+and+Applied+Mathematics+Methods&source=edX&product_category=course&placement_url=https%3A%2F%2Fwww.edx.org%2Flearn%2Fgeometry",
+                        School = "EDX"
+                    },
+
+                    new() {
+                        Title = "MA005: Calculus I",
+                        Category = "Mathematics",
+                        Description = "This course is divided into five learning sections, or units, plus a reference section, or appendix. The course begins with a unit that provides a review of algebra specifically designed to help and prepare you for the study of calculus. The second unit discusses functions, graphs, limits, and continuity. Understanding limits could not be more important, as that topic really begins the study of calculus. The third unit introduces and explains derivatives. With derivatives, we are now ready to handle all of those things that change mentioned above. The fourth unit makes visual sense of derivatives by discussing derivatives and graphs. The fifth unit introduces and explains antiderivatives and definite integrals. Finally, the reference section provides a large collection of reference facts, geometry, and trigonometry that will assist you in solving calculus problems long after the course is over.",
+                        Link = "https://learn.saylor.org/course/view.php?id=25",
+                        School = "Saylor"
+                    },
+
+                    new() {
+                        Title = "Early Childhood: Development of Math Skills",
+                        Category = "Mathematics",
+                        Description = "Skills developed in preschool help children to grasp new subject matters they encounter later. This teaching course provides a foundation on which to build math skills in early childhood education. It draws on the existing research to explain the importance, techniques and tools of mathematics education. Whether you are a teacher, school counselor or parent homeschooling your kids, sign up to learn a critical aspect of childhood education.",
+                        Link = "https://alison.com/course/early-childhood-development-of-math-skills",
+                        School = "Alison"
+                    },
+
+
                 };
                 Console.WriteLine("Course data seeding completed successfully.");
 
