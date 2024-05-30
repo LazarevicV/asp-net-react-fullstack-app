@@ -32,7 +32,7 @@ const CourseCard: React.FC<{ className?: string; course: CourseType }> = ({
         />
       </div>
       <CardHeader className="">
-        <h3 className="text-3xl font-semibold h-[35px]">{course.title}</h3>
+        <h3 className="text-2xl font-semibold h-[35px]">{course.title}</h3>
       </CardHeader>
 
       <CardContent>
