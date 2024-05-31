@@ -222,6 +222,38 @@ namespace asp_net_react_fullstack_app.Server.Migrations
                         School = "Alison"
                     },
 
+                    new() {
+                        Title = "Introduction to Python",
+                        Category = "Computer Science",
+                        Description = "\"Introduction to Python\" is a beginner-friendly course that teaches the fundamentals of programming using the Python language. Students will learn core concepts such as variables, data types, control structures, functions, and basic data structures, enabling them to write simple yet powerful programs and scripts.",
+                        Link = "https://www.coursera.org/projects/introduction-to-python",
+                        School = "Coursera"
+                    },
+
+                    new() {
+                        Title = "Develop Your First Python Program",
+                        Category = "Computer Science",
+                        Description = "\"Develop Your First Python Program\" is a practical course designed to guide beginners through the process of creating their first Python application. Participants will learn essential programming skills, including writing and debugging code, using libraries, and implementing basic algorithms, culminating in the development of a functional Python program.",
+                        Link = "https://www.coursera.org/projects/python101-develop-your-first-python-code",
+                        School = "Coursera"
+                    },
+
+                    new() {
+                        Title = "Python for Data Science, AI & Development",
+                        Category = "Computer Science",
+                        Description = "\"Python for Data Science, AI & Development\" is an advanced course that equips learners with the Python programming skills needed for data analysis, machine learning, and AI applications. Students will explore data manipulation, visualization, statistical modeling, and algorithm development, preparing them to tackle real-world challenges in data science and artificial intelligence.",
+                        Link = "https://www.coursera.org/learn/python-for-applied-data-science-ai",
+                        School = "Coursera"
+                    },
+
+                    // https://www.coursera.org/learn/food-and-health
+                    new() {
+                        Title = "Stanford Introduction to Food and Health\n",
+                        Category = "Health",
+                        Description = "\"Stanford Introduction to Food and Health\" is a comprehensive course that explores the relationship between diet, nutrition, and health. Students will learn about the principles of healthy eating, the impact of food on chronic diseases, and strategies for making informed dietary choices to promote overall well-being.",
+                        Link = "https://www.coursera.org/learn/food-and-health",
+                        School = "Coursera"
+                    },
 
                 };
                 Console.WriteLine("Course data seeding completed successfully.");

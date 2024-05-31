@@ -29,8 +29,22 @@ public class RoadmapSeeder
                     Name = "Python Roadmap",
                     Description = "A comprehensive roadmap for aspiring young programmers to learn python…",
                     Courses = [
+                        _courses[26].Id.ToString(),
                         _courses[0].Id.ToString(),
-                        _courses[1].Id.ToString(),
+                        _courses[27].Id.ToString(),
+                        _courses[28].Id.ToString(),
+                    ]
+                },
+
+                new() {
+                    Name = "Mathematics Roadmap",
+                    Description = "A comprehensive roadmap for aspiring young students to learn math…",
+                    Courses = [
+                        _courses[25].Id.ToString(),
+                        _courses[6].Id.ToString(), // get ready for algebra 1
+                        _courses[24].Id.ToString(),
+                        _courses[22].Id.ToString(),
+                        _courses[23].Id.ToString(),
                     ]
                 }
             };
